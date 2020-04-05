@@ -1,0 +1,54 @@
+{% extends 'bananasorter/base.html' %}
+{% load staticfiles %}
+
+<head>
+  <meta charset="utf-8">
+  <title>Classifier: {{ classifier }}</title>
+</head>
+
+{% block content %}
+
+<body>
+  <h1>{{ classifier }} Classifier</h1>
+  <p>
+    Classify your text into the following categories:
+    <ul class=category_list>
+      <noscript>
+      {% for category in categories %}
+        <li>{{ category }}</li>
+      {% endfor %}
+      </noscript>
+    </ul>
+  </p>
+
+  {% if prediction %}
+  <h2>Your Prediction</h2>
+  <p>
+      {{ new_text }}: {{ prediction }}
+  </p>
+  {% endif %}
+  <br>
+  <h2>Try it out!</h2>
+  <form id="classify" action="" method="post">{% csrf_token %}
+    <input type="hidden" name="classifier_id" value={{ classifier.id }}>
+    <input type="text" name="new_text" value="">
+    <input type="submit" name="action" value="Classify this!">
+  </form>
+  <br>
+  {% if request.user == classifier.owner %}
+  <h2>Add a new category: </h2>
+    <p>Enter sample words, phrases or sentences separated by commas.</p>
+    <form class="category_form" action="" method="post">{% csrf_token %}
+      {{category_form.as_p}}
+      <input type="submit" name="action" value="Submit">
+    </form>
+  <br>
+  <h3>DELETE THIS CLASSIFIER</h3>
+  <form id="delete" action="" method="post">{% csrf_token %}
+      <input type="submit" name="action" value="DELETE">
+  </form>
+  {% endif %}
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+  <script type="text/javascript" src="{% static 'bananasorter/js/detail.js' %}"></script>
+</body>
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends 'bananasorter/base.html' %}
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>{% block title %} Profile: {{ user }} {% endblock%}</title>
+        <noscript>
+            <meta http-equiv="refresh" content="60">
+        </noscript>
+    </head>
+
+{% block content %}
+
+
+    <body>
+        <header>
+            <h2>Text classifiers</h2>
+        </header>
+        <p>View the following text classifiers you've made:</p>
+            <ul class=classifier_list>
+            {% if user_class_list %}
+                <noscript>
+                {% for classifier in user_class_list %}
+                <li> <a href="{% url 'bananasorter:detail' classifier.id %}">{{ classifier }}</a></li>
+                {% endfor %}
+                </noscript>
+            </ul>
+            {% else %}
+                <li>Empty list</li>
+            </ul>
+            {% endif %}
+
+        <h2>Add a new classifier: </h2>
+        <form class="classifier_form" action="" method="post">
+            {% csrf_token %}
+            <!-- {{ classifier_form.as_p }} -->
+            <p>Name: <input type="text" name="name" value=""><br/><br/></p>
+            <input type="hidden" name="user_id" value={{ request.user.id }}>
+            <input type="submit" name="new_classifier" value="Add Classifier">
+        </form>
+
+    </body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+    <script type="text/javascript" src="{% static 'bananasorter/js/profile.js' %}"></script>
+{% endblock %}
+</html>

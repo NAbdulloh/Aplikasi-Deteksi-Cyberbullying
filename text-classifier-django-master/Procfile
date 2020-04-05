@@ -1,0 +1,1 @@
+web: gunicorn banana.wsgi --log-file -

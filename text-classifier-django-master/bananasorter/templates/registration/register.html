@@ -1,0 +1,18 @@
+{% extends 'bananasorter/base.html' %}
+
+{% block title %}
+Register
+{% endblock %}
+
+{% block content %}
+
+<h2>Register</h2>
+
+<form action="{% url 'bananasorter:register_user' %}" method='post'>
+  {% csrf_token %}
+  {{form}}
+  <input class="btn btn-primary" type="submit" value="Register">
+
+</form>
+
+  {% endblock %}

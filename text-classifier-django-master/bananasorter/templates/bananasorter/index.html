@@ -1,0 +1,17 @@
+{% extends 'bananasorter/base.html' %}
+
+{% block content %}
+
+  <h2>Current Classifiers</h2>
+  {% if classifier_list %}
+    <ul>
+      {% for classifier in classifier_list %}
+        <li> <a href="{% url 'bananasorter:detail' classifier.id %}">{{ classifier }}</a></li>
+      {% endfor %}
+    </ul>
+
+  {% else %}
+    <p>No Classifier are available... but so far so Bueno!!!</p>
+  {% endif %}
+
+{% endblock %}
